@@ -1,4 +1,9 @@
 <?php
+// First of all, what might be apparent is the lack of tags. "Boo hoo, but my <html>, and my <head>!"
+// My answer: I don't care. The browser will take care of it.
+// If you, however, are insistent on using a browser that does *not* take care
+// of this, you are mentally ill.
+
 // So, you see, the error handling is commented out because, yanno, these
 // checks will always pass on the first visit.
 // The reason is that before you actually enter any numbers, there's no data in
