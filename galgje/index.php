@@ -7,22 +7,21 @@
 // this while writing it.
 
 // This is used for tracking the user's correct answers.
-$ans1 = $_POST['ans1'] ?? '_';
-$ans2 = $_POST['ans2'] ?? '_';
-$ans3 = $_POST['ans3'] ?? '_';
-$ans4 = $_POST['ans4'] ?? '_';
-$ans5 = $_POST['ans5'] ?? '_';
-$ans6 = $_POST['ans6'] ?? '_';
-$ans7 = $_POST['ans7'] ?? '_';
+// A clearly superior method of creating all the variables.
+// This loop creates the `ans1` to `ans7` variables.
+// <https://www.php.net/manual/en/language.variables.variable.php>
+foreach (range(1, 7) as $i) {
+  ${"ans$i"} = $_POST["ans$i"] ?? '_';
+}
 
 // This is used for tracking the correct answers.
-$woord1 = "v";
-$woord2 = "i";
-$woord3 = "m";
-$woord4 = "l";
-$woord5 = "a";
-$woord6 = "n";
-$woord7 = "g";
+// Once again, we use the looping method to create a set of variables.
+$woord = "vimlang";
+$key = 1;
+foreach (str_split($woord) as $letter) {
+  ${"woord$key"} = $letter;
+  $key++;
+}
 
 // This is used for tracking how many times the user has guessed.
 $gekozen = "";
@@ -68,8 +67,10 @@ if (isset($_POST['gok'])) {
 <body>
   <br />
   <?php
-  // What the hell... NOTE: USE A FOR LOOP!
-  echo $ans1 . " " . $ans2 . " " . $ans3 . " " . $ans4 . " " . $ans5 . " " . $ans6 . " " . $ans7;
+  // Display the correctly guessed letters, or the underscores.
+  foreach (range(1, 7) as $i) {
+    echo ${"ans$i"} . " ";
+  }
   ?>
   <br />
   <form action="index.php" method="post">
