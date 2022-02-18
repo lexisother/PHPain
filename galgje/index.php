@@ -78,13 +78,11 @@ if (isset($_POST['gok'])) {
 
     <!-- The horrid trackers. They serve one purpose, that being: store content across POST requests. -->
     <input type="hidden" name="gekozen" value="<?php echo $gekozen ?>" />
-    <input type="hidden" name="ans1" value="<?php echo $ans1 ?>" />
-    <input type="hidden" name="ans2" value="<?php echo $ans2 ?>" />
-    <input type="hidden" name="ans3" value="<?php echo $ans3 ?>" />
-    <input type="hidden" name="ans4" value="<?php echo $ans4 ?>" />
-    <input type="hidden" name="ans5" value="<?php echo $ans5 ?>" />
-    <input type="hidden" name="ans6" value="<?php echo $ans6 ?>" />
-    <input type="hidden" name="ans7" value="<?php echo $ans7 ?>" />
+    <?php
+    foreach (range(1, 7) as $i) {
+      echo "<input type=\"hidden\" name=\"ans$i\" value=\"${"ans$i"}\" />";
+    }
+    ?>
     <input type="submit" />
   </form>
 
