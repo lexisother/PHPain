@@ -4,24 +4,8 @@
 session_start();
 
 if (isset($_GET['reset'])) {
-  $vakje1 = "";
-  $vakje2 = "";
-  $vakje3 = "";
-  $vakje4 = "";
-  $vakje5 = "";
-  $vakje6 = "";
-  $vakje7 = "";
-  $vakje8 = "";
-  $vakje9 = "";
-  $_SESSION['vakjes'][1] = $vakje1;
-  $_SESSION['vakjes'][2] = $vakje2;
-  $_SESSION['vakjes'][3] = $vakje3;
-  $_SESSION['vakjes'][4] = $vakje4;
-  $_SESSION['vakjes'][5] = $vakje5;
-  $_SESSION['vakjes'][6] = $vakje6;
-  $_SESSION['vakjes'][7] = $vakje7;
-  $_SESSION['vakjes'][8] = $vakje8;
-  $_SESSION['vakjes'][9] = $vakje9;
+  session_destroy();
+  header("location:index.php");
 }
 
 $tekens = array("", "X", "O");
