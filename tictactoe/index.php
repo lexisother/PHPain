@@ -23,6 +23,7 @@ if (isset($_SESSION['vakjes'])) {
   $vakje7 = $_SESSION['vakjes'][7];
   $vakje8 = $_SESSION['vakjes'][8];
   $vakje9 = $_SESSION['vakjes'][9];
+  $wie = $_SESSION['wie'];
 } else {
   $vakje1 = "";
   $vakje2 = "";
@@ -33,27 +34,33 @@ if (isset($_SESSION['vakjes'])) {
   $vakje7 = "";
   $vakje8 = "";
   $vakje9 = "";
+  $wie = true;
 }
 
 if (isset($_GET['klik'])) {
+  if ($wie) {
+    $teken = 1;
+  } else {
+    $teken = 2;
+  }
   if ($_GET['klik'] == 1) {
-    $vakje1 = $tekens[2];
+    $vakje1 = $tekens[$teken];
   } elseif ($_GET['klik'] == 2) {
-    $vakje2 = $tekens[2];
+    $vakje2 = $tekens[$teken];
   } elseif ($_GET['klik'] == 3) {
-    $vakje3 = $tekens[2];
+    $vakje3 = $tekens[$teken];
   } elseif ($_GET['klik'] == 4) {
-    $vakje4 = $tekens[2];
+    $vakje4 = $tekens[$teken];
   } elseif ($_GET['klik'] == 5) {
-    $vakje5 = $tekens[2];
+    $vakje5 = $tekens[$teken];
   } elseif ($_GET['klik'] == 6) {
-    $vakje6 = $tekens[2];
+    $vakje6 = $tekens[$teken];
   } elseif ($_GET['klik'] == 7) {
-    $vakje7 = $tekens[2];
+    $vakje7 = $tekens[$teken];
   } elseif ($_GET['klik'] == 8) {
-    $vakje8 = $tekens[2];
+    $vakje8 = $tekens[$teken];
   } elseif ($_GET['klik'] == 9) {
-    $vakje9 = $tekens[2];
+    $vakje9 = $tekens[$teken];
   }
 }
 
@@ -66,6 +73,7 @@ $_SESSION['vakjes'][6] = $vakje6;
 $_SESSION['vakjes'][7] = $vakje7;
 $_SESSION['vakjes'][8] = $vakje8;
 $_SESSION['vakjes'][9] = $vakje9;
+$_SESSION['wie'] = !$wie;
 
 
 ?>
