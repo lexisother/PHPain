@@ -37,6 +37,8 @@ if (isset($_SESSION['vakjes'])) {
   $wie = true;
 }
 
+$text = "";
+
 if (isset($_GET['klik'])) {
   if ($wie) {
     $teken = 1;
@@ -74,7 +76,114 @@ $_SESSION['vakjes'][7] = $vakje7;
 $_SESSION['vakjes'][8] = $vakje8;
 $_SESSION['vakjes'][9] = $vakje9;
 $_SESSION['wie'] = !$wie;
+$_SESSION['win1'] = false;
+$_SESSION['win2'] = false;
+$_SESSION['win3'] = false;
+$_SESSION['win4'] = false;
+$_SESSION['win5'] = false;
+$_SESSION['win6'] = false;
+$_SESSION['win7'] = false;
+$_SESSION['win8'] = false;
+$_SESSION['win9'] = false;
 
+
+// TODO: REFACTOR!!!
+
+// X {{{
+if ($vakje1 == $x && $vakje2 == $x && $vakje3 == $x) {
+  $text = "x heeft gewonnen<br><br>";
+  $_SESSION['win1'] = true;
+  $_SESSION['win2'] = true;
+  $_SESSION['win3'] = true;
+} elseif ($vakje4 == $x && $vakje5 == $x && $vakje6 == $x) {
+  $text = "x heeft gewonnen<br><br>";
+  $_SESSION['win4'] = true;
+  $_SESSION['win5'] = true;
+  $_SESSION['win6'] = true;
+} elseif ($vakje7 == $x && $vakje8 == $x && $vakje9 == $x) {
+  $text = "x heeft gewonnen<br><br>";
+  $_SESSION['win7'] = true;
+  $_SESSION['win8'] = true;
+  $_SESSION['win9'] = true;
+}
+
+if ($vakje1 == $x && $vakje4 == $x && $vakje7 == $x) {
+  $text = "x heeft gewonnen<br><br>";
+  $_SESSION['win1'] = true;
+  $_SESSION['win4'] = true;
+  $_SESSION['win7'] = true;
+} elseif ($vakje2 == $x && $vakje5 == $x && $vakje8 == $x) {
+  $text = "x heeft gewonnen<br><br>";
+  $_SESSION['win2'] = true;
+  $_SESSION['win5'] = true;
+  $_SESSION['win8'] = true;
+} elseif ($vakje3 == $x && $vakje6 == $x && $vakje9 == $x) {
+  $text = "x heeft gewonnen<br><br>";
+  $_SESSION['win3'] = true;
+  $_SESSION['win6'] = true;
+  $_SESSION['win9'] = true;
+}
+
+if ($vakje1 == $x && $vakje5 == $x && $vakje9 == $x) {
+  $text = "x heeft gewonnen<br><br>";
+  $_SESSION['win1'] = true;
+  $_SESSION['win5'] = true;
+  $_SESSION['win9'] = true;
+} elseif ($vakje3 == $x && $vakje5 == $x && $vakje7 == $x) {
+  $text = "x heeft gewonnen<br><br>";
+  $_SESSION['win3'] = true;
+  $_SESSION['win5'] = true;
+  $_SESSION['win7'] = true;
+}
+// }}}
+
+// O {{{
+if ($vakje1 == $o && $vakje2 == $o && $vakje3 == $o) {
+  $text = "o heeft gewonnen<br><br>";
+  $_SESSION['win1'] = true;
+  $_SESSION['win2'] = true;
+  $_SESSION['win3'] = true;
+} elseif ($vakje4 == $o && $vakje5 == $o && $vakje6 == $o) {
+  $text = "o heeft gewonnen<br><br>";
+  $_SESSION['win4'] = true;
+  $_SESSION['win5'] = true;
+  $_SESSION['win6'] = true;
+} elseif ($vakje7 == $o && $vakje8 == $o && $vakje9 == $o) {
+  $text = "o heeft gewonnen<br><br>";
+  $_SESSION['win7'] = true;
+  $_SESSION['win8'] = true;
+  $_SESSION['win9'] = true;
+}
+
+if ($vakje1 == $o && $vakje4 == $o && $vakje7 == $o) {
+  $text = "o heeft gewonnen<br><br>";
+  $_SESSION['win1'] = true;
+  $_SESSION['win4'] = true;
+  $_SESSION['win7'] = true;
+} elseif ($vakje2 == $o && $vakje5 == $o && $vakje8 == $o) {
+  $text = "o heeft gewonnen<br><br>";
+  $_SESSION['win2'] = true;
+  $_SESSION['win5'] = true;
+  $_SESSION['win8'] = true;
+} elseif ($vakje3 == $o && $vakje6 == $o && $vakje9 == $o) {
+  $text = "o heeft gewonnen<br><br>";
+  $_SESSION['win3'] = true;
+  $_SESSION['win6'] = true;
+  $_SESSION['win9'] = true;
+}
+
+if ($vakje1 == $o && $vakje5 == $o && $vakje9 == $o) {
+  $text = "o heeft gewonnen<br><br>";
+  $_SESSION['win1'] = true;
+  $_SESSION['win5'] = true;
+  $_SESSION['win9'] = true;
+} elseif ($vakje3 == $o && $vakje5 == $o && $vakje7 == $o) {
+  $text = "o heeft gewonnen<br><br>";
+  $_SESSION['win3'] = true;
+  $_SESSION['win5'] = true;
+  $_SESSION['win7'] = true;
+}
+// }}}
 
 ?>
 
@@ -92,78 +201,36 @@ $_SESSION['wie'] = !$wie;
       height: 50px;
       border: 1px solid black;
     }
+
+    .won {
+      background-color: green;
+    }
   </style>
 </head>
 
 <body>
+  <!-- I purposefully didn't implement prevention of re-choosing an already chosen square. -->
+  <!-- So, as it goes... TODO: PREVENT USER FROM RE-CHOOSING CHOSEN SQUARE -->
   <table>
     <tr>
-      <td onclick="window.location.href=`index.php?klik=1`;"><?php echo $vakje1; ?></td>
-      <td onclick="window.location.href=`index.php?klik=2`;"><?php echo $vakje2; ?></td>
-      <td onclick="window.location.href=`index.php?klik=3`;"><?php echo $vakje3; ?></td>
+      <td class="<?php if ($_SESSION['win1']) echo 'won'; ?>" onclick="window.location.href=`index.php?klik=1`;"><?php echo $vakje1; ?></td>
+      <td class="<?php if ($_SESSION['win2']) echo 'won'; ?>" onclick="window.location.href=`index.php?klik=2`;"><?php echo $vakje2; ?></td>
+      <td class="<?php if ($_SESSION['win3']) echo 'won'; ?>" onclick="window.location.href=`index.php?klik=3`;"><?php echo $vakje3; ?></td>
     </tr>
     <tr>
-      <td onclick="window.location.href=`index.php?klik=4`;"><?php echo $vakje4; ?></td>
-      <td onclick="window.location.href=`index.php?klik=5`;"><?php echo $vakje5; ?></td>
-      <td onclick="window.location.href=`index.php?klik=6`;"><?php echo $vakje6; ?></td>
+      <td class="<?php if ($_SESSION['win4']) echo 'won'; ?>" onclick="window.location.href=`index.php?klik=4`;"><?php echo $vakje4; ?></td>
+      <td class="<?php if ($_SESSION['win5']) echo 'won'; ?>" onclick="window.location.href=`index.php?klik=5`;"><?php echo $vakje5; ?></td>
+      <td class="<?php if ($_SESSION['win6']) echo 'won'; ?>" onclick="window.location.href=`index.php?klik=6`;"><?php echo $vakje6; ?></td>
     </tr>
     <tr>
-      <td onclick="window.location.href=`index.php?klik=7`;"><?php echo $vakje7; ?></td>
-      <td onclick="window.location.href=`index.php?klik=8`;"><?php echo $vakje8; ?></td>
-      <td onclick="window.location.href=`index.php?klik=9`;"><?php echo $vakje9; ?></td>
+      <td class="<?php if ($_SESSION['win7']) echo 'won'; ?>" onclick="window.location.href=`index.php?klik=7`;"><?php echo $vakje7; ?></td>
+      <td class="<?php if ($_SESSION['win8']) echo 'won'; ?>" onclick="window.location.href=`index.php?klik=8`;"><?php echo $vakje8; ?></td>
+      <td class="<?php if ($_SESSION['win9']) echo 'won'; ?>" onclick="window.location.href=`index.php?klik=9`;"><?php echo $vakje9; ?></td>
     </tr>
   </table>
 
   <?php
-  // TODO: REFACTOR!!!
-
-  // X {{{
-  if ($vakje1 == $x && $vakje2 == $x && $vakje3 == $x) {
-    echo "x heeft gewonnen<br><br>";
-  } elseif ($vakje4 == $x && $vakje5 == $x && $vakje6 == $x) {
-    echo "x heeft gewonnen<br><br>";
-  } elseif ($vakje7 == $x && $vakje8 == $x && $vakje9 == $x) {
-    echo "x heeft gewonnen<br><br>";
-  }
-
-  if ($vakje1 == $x && $vakje4 == $x && $vakje7 == $x) {
-    echo "x heeft gewonnen<br><br>";
-  } elseif ($vakje2 == $x && $vakje5 == $x && $vakje8 == $x) {
-    echo "x heeft gewonnen<br><br>";
-  } elseif ($vakje3 == $x && $vakje6 == $x && $vakje9 == $x) {
-    echo "x heeft gewonnen<br><br>";
-  }
-
-  if ($vakje1 == $x && $vakje5 == $x && $vakje9 == $x) {
-    echo "x heeft gewonnen<br><br>";
-  } elseif ($vakje3 == $x && $vakje5 == $x && $vakje7 == $x) {
-    echo "x heeft gewonnen<br><br>";
-  }
-  // }}}
-
-  // O {{{
-  if ($vakje1 == $o && $vakje2 == $o && $vakje3 == $o) {
-    echo "o heeft gewonnen<br><br>";
-  } elseif ($vakje4 == $o && $vakje5 == $o && $vakje6 == $o) {
-    echo "o heeft gewonnen<br><br>";
-  } elseif ($vakje7 == $o && $vakje8 == $o && $vakje9 == $o) {
-    echo "o heeft gewonnen<br><br>";
-  }
-
-  if ($vakje1 == $o && $vakje4 == $o && $vakje7 == $o) {
-    echo "o heeft gewonnen<br><br>";
-  } elseif ($vakje2 == $o && $vakje5 == $o && $vakje8 == $o) {
-    echo "o heeft gewonnen<br><br>";
-  } elseif ($vakje3 == $o && $vakje6 == $o && $vakje9 == $o) {
-    echo "o heeft gewonnen<br><br>";
-  }
-
-  if ($vakje1 == $o && $vakje5 == $o && $vakje9 == $o) {
-    echo "o heeft gewonnen<br><br>";
-  } elseif ($vakje3 == $o && $vakje5 == $o && $vakje7 == $o) {
-    echo "o heeft gewonnen<br><br>";
-  }
-  // }}}
+  echo $text;
   ?>
   <p><a href="?reset=">Reset</a></p>
 </body>
