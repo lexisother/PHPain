@@ -78,6 +78,33 @@ for ($i = 0; $i < 5; $i++) {
     </tr>
   </table>
 
+  <br>
+
+  <?php
+  $streetOrNot = false;
+  if (($trackingNums[2] == 1 && $trackingNums[3] == 1 && $trackingNums[4] == 1 && $trackingNums[5] == 1) && ($trackingNums[1] == 1 || $trackingNums[6] == 1)) {
+    echo "Grote straat<br>";
+    $streetOrNot = true;
+  } elseif (($trackingNums[3] == 1 && $trackingNums[4] == 1) && ($trackingNums[1] == 1 && $trackingNums[2] == 1) || ($trackingNums[5] == 1 || $trackingNums[6] == 1)) {
+    echo "Kleine straat<br>";
+    $streetOrNot = true;
+  }
+
+  foreach (range(1, 5) as $num) {
+    if (!$streetOrNot && $trackingNums[$num] == 4) {
+      echo "four of a kind<br>";
+      break;
+    } elseif (!$streetOrNot && $trackingNums[$num] == 3) {
+      echo "three of a kind<br>";
+      break;
+    } elseif (!$streetOrNot && $trackingNums[$num] == 2) {
+      echo "two of a kind<br>";
+      break;
+    }
+  }
+
+  ?>
+
   <script src="dice.js"></script>
 </body>
 
