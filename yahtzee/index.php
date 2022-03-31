@@ -1,6 +1,8 @@
 <?php
+// Keep track of how many dices of what face are thrown.
 $trackingNums = [];
 
+// Throw random dice.
 $dicenums = [];
 for ($i = 0; $i < 5; $i++) {
   $dicenums[$i] = rand(1, 6);
@@ -43,16 +45,18 @@ for ($i = 0; $i < 5; $i++) {
 
 <body>
   <?php
-  // dobbelstenen weergeven
+  // Show the dice.
   foreach ($dicenums as $dice) {
     echo "<dice class='dot{$dice}'></dice>";
   }
   echo "<br />";
 
+  // All dice are the same, Yahtzee!
   if (count(array_unique($dicenums)) === 1) {
     echo "Yahtzee!";
   }
 
+  // Calculate the amounts of dice and push them to the array.
   for ($i = 0; $i < 5; $i++) {
     for ($j = 1; $j <= 6; $j++) {
       if ($dicenums[$i] == $j) {
@@ -68,6 +72,7 @@ for ($i = 0; $i < 5; $i++) {
     </tr>
     <tr>
       <?php
+      // Display a table with the amounts.
       foreach ($trackingNums as $key => $val) {
         echo "<tr>";
         echo "<td>{$key}</td>";
@@ -81,6 +86,7 @@ for ($i = 0; $i < 5; $i++) {
   <br>
 
   <?php
+  // Good God... check what type of win you've got.
   $streetOrNot = false;
   if (($trackingNums[2] == 1 && $trackingNums[3] == 1 && $trackingNums[4] == 1 && $trackingNums[5] == 1) && ($trackingNums[1] == 1 || $trackingNums[6] == 1)) {
     echo "Grote straat<br>";
