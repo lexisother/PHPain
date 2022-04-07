@@ -1,14 +1,7 @@
 <?php
-$board = [];
+include_once("les_6_functies.php");
 
-// Generate the "X-Y coordinate" board structure.
-for ($i = 0; $i < 7; $i++) {
-  $board[$i] = [];
-  for ($j = 0; $j < 10; $j++) {
-    $board[$i][$j] = "";
-  }
-}
-// Now, we can access the whole board using coordinates like $board[3][4] = "x"
+$editedBoard = placeBomb($board, 10);
 ?>
 
 <!DOCTYPE html>
@@ -52,17 +45,7 @@ for ($i = 0; $i < 7; $i++) {
 <body>
   <?php
   // Display the board and the coodinate contents in a table
-  echo '<table>';
-  for ($i = 0; $i < 7; $i++) {
-    echo '<tr>';
-    for ($j = 0; $j < 10; $j++) {
-      echo '<td>';
-      echo $board[$i][$j];
-      echo '</td>';
-    }
-    echo '</tr>';
-  }
-  echo '</table>';
+  showBoard($editedBoard);
   ?>
 </body>
 
