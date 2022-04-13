@@ -1,7 +1,10 @@
 <?php
+session_start();
+if (isset($_GET['reset'])) {
+  session_destroy();
+  header("location:index.php");
+}
 include_once("les_6_functies.php");
-
-$editedBoard = placeBomb($board, 10);
 ?>
 
 <!DOCTYPE html>
@@ -45,8 +48,11 @@ $editedBoard = placeBomb($board, 10);
 <body>
   <?php
   // Display the board and the coodinate contents in a table
-  showBoard($editedBoard);
+  showBoard($board);
   ?>
+  <a href="?reset=">Reset</a>
 </body>
 
 </html>
+
+<?php $_SESSION['game'] = $board; ?>

@@ -1,13 +1,10 @@
 <?php
-// Generate the "X-Y coordinate" board structure.
-$board = [];
-for ($i = 0; $i < 7; $i++) {
-  $board[$i] = [];
-  for ($j = 0; $j < 10; $j++) {
-    $board[$i][$j] = "";
-  }
+if (isset($_SESSION['game'])) {
+  $board = $_SESSION['game'];
+} else {
+  $board = genEmptyBoard();
+  $board = placeBomb($board, 10);
 }
-// Now, we can access the whole board using coordinates like $board[3][4] = "x"
 
 function showBoard($board)
 {
@@ -35,6 +32,19 @@ function placeBomb($board, $aantal)
       $i--;
     } else {
       $board[$x][$y] = "\x58";
+    }
+  }
+  return $board;
+}
+
+// Generate the "X-Y coordinate" board structure.
+function genEmptyBoard()
+{
+  $board = [];
+  for ($i = 0; $i < 7; $i++) {
+    $board[$i] = [];
+    for ($j = 0; $j < 10; $j++) {
+      $board[$i][$j] = "";
     }
   }
   return $board;
