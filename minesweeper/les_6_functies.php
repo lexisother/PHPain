@@ -6,9 +6,17 @@ if (isset($_SESSION['game'])) {
   $board = $_SESSION['game'];
   $selection = $_SESSION['selection'];
 } else {
-  $board = genEmptyBoard();
-  $selection = array_fill(0, 70, true);
-  $board = placeBomb($board, 10);
+  $x = 7;
+  $y = 10;
+  $bombs = 10;
+  if (isset($_POST["GO"])) {
+    $x = $_POST["X"];
+    $y = $_POST["Y"];
+    $bombs = $_POST['bombs'];
+  }
+  $board = genEmptyBoard($x, $y);
+  $selection = array_fill(0, ($x * $y), true);
+  $board = placeBomb($board, $bombs);
   $board = checkBombs($board);
 }
 
@@ -20,8 +28,7 @@ function showBoard($board, $selection)
     echo "<tr>";
     foreach ($rows as $col) {
       if ($selection[$id - 1]) {
-        echo "<td onclick='window.location.href=`?click={$id}`'";
-        echo "><button></button></td>";
+        echo "<td onclick='window.location.href=`?click={$id}`'><button></button></td>";
       } else {
         echo "<td ";
         colour($col);
@@ -51,12 +58,12 @@ function placeBomb($board, $aantal)
 }
 
 // Generate the "X-Y coordinate" board structure.
-function genEmptyBoard()
+function genEmptyBoard($x, $y)
 {
   $board = [];
-  for ($i = 0; $i < 7; $i++) {
+  for ($i = 0; $i < $x; $i++) {
     $board[$i] = [];
-    for ($j = 0; $j < 10; $j++) {
+    for ($j = 0; $j < $y; $j++) {
       $board[$i][$j] = 0;
     }
   }
@@ -168,8 +175,19 @@ function colour($number)
   }
 }
 
+// FIXME: RIGHTMOST ROW IS BROKEN!!!
 function click($board, $selection, $id)
 {
-  $selection[$id - 1] = false;
+  $x = floor($id / count($board[0]) + 1);
+  $y = $id % count($board[0]);
+  if ($board[$x - 1][$y - 1] == "\x58") {
+    $total = count($selection);
+    $selection = array_fill(0, $total, false);
+  } else {
+    $selection[$id - 1] = false;
+  }
+
+  echo "<br>id: {$id} x: {$x} y: {$y}";
+
   return $selection;
 }
