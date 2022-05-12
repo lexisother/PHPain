@@ -4,23 +4,30 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 if (isset($_SESSION['game'])) {
   $board = $_SESSION['game'];
+  $selection = $_SESSION['selection'];
 } else {
   $board = genEmptyBoard();
+  $selection = array_fill(0, 70, true);
   $board = placeBomb($board, 10);
   $board = checkBombs($board);
 }
 
-function showBoard($board)
+function showBoard($board, $selection)
 {
+  $id = 1;
   echo "<table>";
   foreach ($board as $rows) {
     echo "<tr>";
     foreach ($rows as $col) {
-      echo "<td";
-      colour($col);
-      echo ">";
-      echo $col;
-      echo "</td>";
+      if ($selection[$id - 1]) {
+        echo "<td onclick='window.location.href=`?click={$id}`'";
+        echo "><button></button></td>";
+      } else {
+        echo "<td ";
+        colour($col);
+        echo ">{$col}</td>";
+      }
+      $id++;
     }
     echo "</tr>";
   }
@@ -159,4 +166,10 @@ function colour($number)
       echo " class='lightgray' ";
       break;
   }
+}
+
+function click($board, $selection, $id)
+{
+  $selection[$id - 1] = false;
+  return $selection;
 }

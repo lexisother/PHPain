@@ -5,6 +5,10 @@ if (isset($_GET['reset'])) {
   header("location:index.php");
 }
 include_once("les_6_functies.php");
+
+if (isset($_GET['click'])) {
+  $selection = click($board, $selection, $_GET['click']);
+}
 ?>
 
 <!DOCTYPE html>
@@ -37,7 +41,6 @@ include_once("les_6_functies.php");
     }
 
     <?php
-    // TODO: Colour generation?
     $colors = [
       'blue',
       'green',
@@ -62,11 +65,14 @@ include_once("les_6_functies.php");
 <body>
   <?php
   // Display the board and the coodinate contents in a table
-  showBoard($board);
+  showBoard($board, $selection);
   ?>
   <a href="?reset=">Reset</a>
 </body>
 
 </html>
 
-<?php $_SESSION['game'] = $board; ?>
+<?php
+$_SESSION['game'] = $board;
+$_SESSION['selection'] = $selection;
+?>
