@@ -15,9 +15,11 @@ function showBoard($board)
   echo "<table>";
   foreach ($board as $rows) {
     echo "<tr>";
-    foreach ($rows as $row) {
-      echo "<td>";
-      echo $row;
+    foreach ($rows as $col) {
+      echo "<td";
+      colour($col);
+      echo ">";
+      echo $col;
       echo "</td>";
     }
     echo "</tr>";
@@ -115,4 +117,46 @@ function checkBombs($board)
   }
 
   return $board;
+}
+
+function colour($number)
+{
+  switch ($number) {
+    case 1:
+      echo " class='blue' ";
+      break;
+    case 2:
+      echo " class='green' ";
+      break;
+    case 3:
+      echo " class='yellow' ";
+      break;
+    case 4:
+      echo " class='purple' ";
+      break;
+    case 5:
+      echo " class='orange' ";
+      break;
+    case 6:
+      echo " class='magenta' ";
+      break;
+    case 7:
+      echo " class='pink' ";
+      break;
+    case 8:
+      echo " class='chocolate' ";
+      break;
+    case 9:
+      echo " class='cornflowerblue' ";
+      break;
+    case 10:
+      echo " class='lime' ";
+      break;
+    case "X":
+      echo " class='red' ";
+      break;
+    default:
+      echo " class='lightgray' ";
+      break;
+  }
 }

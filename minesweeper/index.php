@@ -38,9 +38,23 @@ include_once("les_6_functies.php");
 
     <?php
     // TODO: Colour generation?
-    // foreach ($colors as $c) {
-    //   echo "." . $c . "{color:" . $c . ";}";
-    // }
+    $colors = [
+      'blue',
+      'green',
+      'yellow',
+      'purple',
+      'orange',
+      'magenta',
+      'pink',
+      'chocolate',
+      'cornflowerblue',
+      'lime',
+      'lightgray',
+      'red',
+    ];
+    foreach ($colors as $c) {
+      echo "." . $c . "{color:" . $c . ";}";
+    }
     ?>
   </style>
 </head>
