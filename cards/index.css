@@ -1,0 +1,87 @@
+/* Cards {{{ */
+kaart {
+  display: block;
+  position: relative;
+  width: 175px;
+  height: 262.5px;
+  border: 8.75px double black;
+  border-radius: 26.25px;
+  margin: 8.75px;
+}
+
+kaart div:nth-child(1) {
+  position: absolute;
+  top: 8.75px;
+  left: 8.75px;
+}
+
+kaart div:nth-child(2) {
+  position: absolute;
+  bottom: 8.75px;
+  right: 8.75px;
+  transform: rotate(180deg);
+}
+/* }}} */
+
+/* Signs {{{ */
+tekens {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+/* }}} */
+
+/* Icons {{{ */
+icon {
+  position: absolute;
+  height: 43.75px;
+}
+icon p {
+  display: inline;
+  font-size: 1.5em;
+  margin: 0;
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.T2 icon {
+  width: 100%;
+  text-align: center;
+}
+.T2 icon:nth-child(1) {
+  top: calc(25% - 30.625px);
+}
+.T2 icon:nth-child(2) {
+  bottom: calc(25% - 30.625px);
+  transform: rotate(180deg);
+}
+
+/* What the hell is this. */
+.T2 icon:nth-child(1),
+.T3 icon:nth-child(1),
+.T4 icon:nth-child(1),
+.T4 icon:nth-child(2),
+.T5 icon:nth-child(1),
+.T5 icon:nth-child(2),
+.T6 icon:nth-child(1),
+.T6 icon:nth-child(2),
+.T7 icon:nth-child(1),
+.T7 icon:nth-child(2),
+.T8 icon:nth-child(1),
+.T8 icon:nth-child(2),
+.T10 icon:nth-child(3) {
+  top: calc(25% - 30.625PX);
+}
+.T9, .T10{
+  transform: rotate(22.5deg);
+}
+/* }}} */
+
+/* Colors {{{ */
+.red {
+  color: red;
+  border: 8.75px double red;
+}
+/* }}} */
