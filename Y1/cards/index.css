@@ -58,6 +58,20 @@ icon p {
   transform: rotate(180deg);
 }
 
+.T3 icon {
+  width: 100%;
+  text-align: center;
+}
+.T3 icon:nth-child(1) {
+  top: calc(25% - 30.625px) !important;
+}
+.T3 icon:nth-child(2) {
+  top: calc(50% - 30.625px) !important;
+}
+.T3 icon:nth-child(3) {
+  bottom: calc(25% - 30.625px) !important;
+}
+
 /* What the hell is this. */
 .T2 icon:nth-child(1),
 .T3 icon:nth-child(1),
@@ -72,7 +86,7 @@ icon p {
 .T8 icon:nth-child(1),
 .T8 icon:nth-child(2),
 .T10 icon:nth-child(3) {
-  top: calc(25% - 30.625PX);
+  top: calc(25% - 30.625px);
 }
 .T9, .T10{
   transform: rotate(22.5deg);
