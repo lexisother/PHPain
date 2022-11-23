@@ -19,4 +19,12 @@ class Tile
     {
         return $this->type;
     }
+
+    public function __toString(): string
+    {
+        $print = "<tile>";
+
+        $print .= "</tile>\n";
+        return $print;
+    }
 }

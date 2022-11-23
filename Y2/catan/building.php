@@ -8,4 +8,9 @@ class Building
     )
     {
     }
+
+    public function __toString(): string
+    {
+        return "<piece class='{$this->type}'></piece>\n";
+    }
 }
