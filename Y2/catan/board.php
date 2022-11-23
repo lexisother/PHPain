@@ -14,14 +14,14 @@ class Board
 
     public function __construct()
     {
-        for ($i = 0; $i < 20; $i++) {
-            $this->tiles[] = new Tile($i, "wood");
+        for ($i = 1; $i < 20; $i++) {
+            $this->tiles[$i] = new Tile($i, "wood");
         }
-        for ($i = 0; $i < 55; $i++) {
-            $this->buildings[] = new Building("city", "");
+        for ($i = 1; $i < 55; $i++) {
+            $this->buildings[$i] = new Building($i, "city", "");
         }
-        for ($i = 0; $i < 72; $i++) {
-            $this->roads[] = new Building("road", "");
+        for ($i = 72; $i > 0; $i--) {
+            $this->roads[$i] = new Building($i, "road", "");
         }
     }
 
@@ -30,15 +30,15 @@ class Board
         $print = "<board>\n";
         $print .= $this->cityRow(1, 8);
         $print .= $this->tileRow(1, 4);
-        $print .= $this->cityRow(1, 10);
+        $print .= $this->cityRow(8, 17);
         $print .= $this->tileRow(1, 5);
-        $print .= $this->cityRow(1, 12);
+        $print .= $this->cityRow(17, 28);
         $print .= $this->tileRow(1, 6);
-        $print .= $this->cityRow(1, 12);
+        $print .= $this->cityRow(28, 39);
         $print .= $this->tileRow(1, 5);
-        $print .= $this->cityRow(1, 10);
+        $print .= $this->cityRow(39, 48);
         $print .= $this->tileRow(1, 4);
-        $print .= $this->cityRow(1, 8);
+        $print .= $this->cityRow(48, 55);
         $print .= "</board>\n";
         return $print;
     }
