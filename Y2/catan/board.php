@@ -14,8 +14,10 @@ class Board
 
     public function __construct()
     {
+        $Numbers = [1 => 11, 12, 9, 4, 6, 5, 10, 3, 11, 7, 4, 8, 8, 10, 9, 3, 5, 2, 6];
+        $Types = [1 => "wood", "grass", "wheat", "stone", "iron", "stone", "grass", "wood", "wheat", "", "wood", "wheat", "stone", "grass", "grass", "iron", "iron", "wheat", "wood"];
         for ($i = 1; $i < 20; $i++) {
-            $this->tiles[$i] = new Tile($i, "wood");
+            $this->tiles[$i] = new Tile($Numbers[$i], $Types[$i]);
         }
         for ($i = 1; $i < 55; $i++) {
             $this->buildings[$i] = new Building($i, "city", "");
@@ -31,13 +33,13 @@ class Board
         $print .= $this->cityRow(1, 8);
         $print .= $this->tileRow(1, 4);
         $print .= $this->cityRow(8, 17);
-        $print .= $this->tileRow(1, 5);
+        $print .= $this->tileRow(4, 8);
         $print .= $this->cityRow(17, 28);
-        $print .= $this->tileRow(1, 6);
+        $print .= $this->tileRow(8, 13);
         $print .= $this->cityRow(28, 39);
-        $print .= $this->tileRow(1, 5);
+        $print .= $this->tileRow(13, 17);
         $print .= $this->cityRow(39, 48);
-        $print .= $this->tileRow(1, 4);
+        $print .= $this->tileRow(17, 20);
         $print .= $this->cityRow(48, 55);
         $print .= "</board>\n";
         return $print;

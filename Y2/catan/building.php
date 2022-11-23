@@ -12,6 +12,6 @@ class Building
 
     public function __toString(): string
     {
-        return "<piece class='{$this->type}'>{$this->id}</piece>\n";
+        return "<piece class='{$this->type} {$this->colour}'>{$this->id}</piece>\n";
     }
 }
