@@ -30,9 +30,7 @@ class Player
         $print .= "<h3>{$this->name}</h3>\n";
         $print .= "<buildings>\n";
         foreach ($this->pieces as $category) {
-            foreach ($category as $piece) {
-                $print .= $piece;
-            }
+            $print .= implode('', $category);
         }
         $print .= "</buildings>\n";
         $print .= "<resources>\n";
@@ -46,5 +44,63 @@ class Player
         $print .= "</resources>\n";
         $print .= "</player>\n";
         return $print;
+    }
+
+    public function givePiece(string $type): ?Building
+    {
+        if ($this->checkResources($type)) {
+            return match ($type) {
+                "road" => array_pop($this->pieces["roads"]),
+                "village" => array_pop($this->pieces["villages"]),
+                "city" => array_pop($this->pieces["cities"]),
+            };
+        }
+        return null;
+    }
+
+    private function checkResources(string $type): bool
+    {
+        switch ($type) {
+            case "road":
+                if ($this->resources["wood"] > 0 && $this->resources["stone"] > 0) {
+                    $this->resources["wood"]--;
+                    $this->resources["stone"]--;
+                    return true;
+                }
+                break;
+            case "village":
+                if ($this->resources["wood"] > 0 && $this->resources["stone"] > 0 && $this->resources["sheep"] > 0 && $this->resources["wheat"]) {
+                    $this->resources["wood"]--;
+                    $this->resources["stone"]--;
+                    $this->resources["sheep"]--;
+                    $this->resources["wheat"]--;
+                    return true;
+                }
+                break;
+            case "city":
+                if ($this->resources["ore"] > 1 && $this->resources["wheat"] > 2) {
+                    $this->resources["ore"] -= 2;
+                    $this->resources["wheat"] -= 3;
+                    return true;
+                }
+                break;
+        }
+        return false;
+    }
+
+    public function receivePiece(string $type): void
+    {
+        $i = count($this->pieces[$type]);
+        $this->pieces[$type] = new Building($i, $type, "P" . $this->id);
+
+        // kept for posterity
+        // $l = count($this->pieces[$type == "road" || $type == "village" ? $type . "s" : "cities"]);
+        // $last = $this->pieces[$type == "road" || $type == "village" ? $type . "s" : "cities"][$l - 1];
+        // $bld = new Building($l + 1, $type, "Pwhatever");
+        // return match ($type) {
+        //      "road" => array_push($this->pieces['roads'], $bld),
+        //      "village" => array_push($this->pieces['villages'], $bld),
+        //      "city" => array_push($this->pieces['cities'], $bld)
+        // };
     }
 }

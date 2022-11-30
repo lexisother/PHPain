@@ -45,8 +45,6 @@ class Board
         return $print;
     }
 
-    // TODO: Refactor the below functions into one
-
     /**
      * Print out a city row.
      *
@@ -67,6 +65,7 @@ class Board
         return $print;
     }
 
+    // TODO: Refactor the below functions into one
 
     /**
      * Print out a tile row.
@@ -85,5 +84,20 @@ class Board
         }
         $print .= "</tilerow>\n<br/>\n";
         return $print;
+    }
+
+    public function placeBuilding(Building $bld, int $id): void
+    {
+        $bldType = $bld->getType();
+        match ($bldType) {
+            "road" => [
+                $this->roads[$id] = $bld,
+                $this->roads[$id]->setId($id),
+            ],
+            "village", "city" => [
+                $this->buildings[$id] = $bld,
+                $this->buildings[$id]->setId($id)
+            ]
+        };
     }
 }
