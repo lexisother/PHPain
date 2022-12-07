@@ -13,10 +13,11 @@ class Building
     public function __toString(): string
     {
         if ($this->colour == "" || ($this->type == "village")) {
-            return "<piece class='{$this->type} {$this->colour}' onclick='document.location.href = `?{$this->type}={$this->id}`'>{$this->id}</piece>\n";
-        } else {
-            return "<piece class='{$this->type} {$this->colour}'>{$this->id}</piece>\n";
+            if ($this->type !== "X") {
+                return "<piece class='{$this->type} {$this->colour}' onclick='document.location.href = `?{$this->type}={$this->id}`'>{$this->id}</piece>\n";
+            }
         }
+        return "<piece class='{$this->type} {$this->colour}'>{$this->id}</piece>\n";
     }
 
     public function getType(): string

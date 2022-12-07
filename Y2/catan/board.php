@@ -15,7 +15,7 @@ class Board
     public function __construct()
     {
         $Numbers = [1 => 11, 12, 9, 4, 6, 5, 10, 3, 11, 7, 4, 8, 8, 10, 9, 3, 5, 2, 6];
-        $Types = [1 => "wood", "grass", "wheat", "stone", "iron", "stone", "grass", "wood", "wheat", "", "wood", "wheat", "stone", "grass", "grass", "iron", "iron", "wheat", "wood"];
+        $Types = [1 => "wood", "grass", "wheat", "stone", "ore", "stone", "grass", "wood", "wheat", "", "wood", "wheat", "stone", "grass", "grass", "iron", "iron", "wheat", "wood"];
         for ($i = 1; $i < 20; $i++) {
             $this->tiles[$i] = new Tile($Numbers[$i], $Types[$i]);
         }
@@ -89,15 +89,20 @@ class Board
     public function placeBuilding(Building $bld, int $id): void
     {
         $bldType = $bld->getType();
-        match ($bldType) {
-            "road" => [
-                $this->roads[$id] = $bld,
-                $this->roads[$id]->setId($id),
-            ],
-            "village", "city" => [
-                $this->buildings[$id] = $bld,
-                $this->buildings[$id]->setId($id)
-            ]
-        };
+        switch ($bldType) {
+            case "road":
+                $this->roads[$id] = $bld;
+                $this->roads[$id]->setId($id);
+                break;
+            case "village":
+                $cities = Lists::getCityToCities($id);
+                foreach ($cities as $spot) {
+                    $this->buildings[$spot] = new Building($spot, "X", "");
+                }
+            case "city":
+                $this->buildings[$id] = $bld;
+                $this->buildings[$id]->setId($id);
+                break;
+        }
     }
 }

@@ -90,8 +90,8 @@ class Player
 
     public function receivePiece(string $type): void
     {
-        $i = count($this->pieces[$type]);
-        $this->pieces[$type] = new Building($i, $type, "P" . $this->id);
+        $i = count($this->pieces[$type . "s"]);
+        $this->pieces[$type][$i] = new Building($i, $type, "P" . $this->id);
 
         // kept for posterity
         // $l = count($this->pieces[$type == "road" || $type == "village" ? $type . "s" : "cities"]);
