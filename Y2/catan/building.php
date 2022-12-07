@@ -12,8 +12,8 @@ class Building
 
     public function __toString(): string
     {
-        if ($this->colour == "") {
-            return "<piece class='{$this->type}' onclick='document.location.href = `?{$this->type}={$this->id}`'>{$this->id}</piece>\n";
+        if ($this->colour == "" || ($this->type == "village")) {
+            return "<piece class='{$this->type} {$this->colour}' onclick='document.location.href = `?{$this->type}={$this->id}`'>{$this->id}</piece>\n";
         } else {
             return "<piece class='{$this->type} {$this->colour}'>{$this->id}</piece>\n";
         }
@@ -32,5 +32,10 @@ class Building
     public function setId(int $id): void
     {
         $this->id = $id;
+    }
+
+    public function getColour(): string
+    {
+        return $this->colour;
     }
 }

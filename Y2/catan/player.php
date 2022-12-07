@@ -20,7 +20,7 @@ class Player
         for ($i = 0; $i < 15; $i++) {
             $this->pieces['roads'][] = new Building($i, "road", "P{$this->id}");
         }
-        $this->resources = ["sheep" => 0, "stone" => 0, "wood" => 0, "ore" => 0, "wheat" => 0];
+        $this->resources = ["sheep" => 10, "stone" => 10, "wood" => 10, "ore" => 10, "wheat" => 10];
         console("Player {$this->id} created with " . count($this->pieces['cities']) . " cities,  " . count($this->pieces['villages']) . " villages, and " . count($this->pieces['roads']) . " roads.");
     }
 
@@ -102,5 +102,10 @@ class Player
         //      "village" => array_push($this->pieces['villages'], $bld),
         //      "city" => array_push($this->pieces['cities'], $bld)
         // };
+    }
+
+    public function receiveResource(string $type): void
+    {
+        $this->resources[$type]++;
     }
 }

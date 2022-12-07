@@ -4,14 +4,18 @@ class Dice
 {
     private int $value;
 
-    function __construct(public int $amount) {}
+    function __construct(public int $amount)
+    {
+        $this->roll();
+    }
 
     /**
      * Roll the die. Stores the value in $amount.
      *
      * @return void
      */
-    public function Roll(): void {
+    public function roll(): void
+    {
         $this->value = 0;
         for ($i = 0; $i < $this->amount; $i++) {
             $this->value += rand(1, 6);

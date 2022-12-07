@@ -3,16 +3,11 @@
 class Tile
 {
     public function __construct(
-        public int             $number,
-        public readonly string $type,
-        public bool            $robber = false,
+        private readonly int    $number,
+        private readonly string $type,
+        private bool            $robber = false,
     )
     {
-    }
-
-    public function setRobber(bool $set = false): void
-    {
-        $this->number = $set;
     }
 
     public function GiveResources(): string
@@ -26,5 +21,21 @@ class Tile
         $print .= "<fiche>{$this->number}</fiche>";
         $print .= "</tile>\n";
         return $print;
+    }
+
+    /**
+     * @return int
+     */
+    public function getNumber(): int
+    {
+        return $this->number;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType(): string
+    {
+        return $this->type;
     }
 }

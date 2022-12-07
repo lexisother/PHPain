@@ -23,6 +23,11 @@ include_once "controller.php";
 
 $controller = new Controller(['Alyxia', 'Niele', 'Tinna', 'Flamex']);
 
+if (isset($_GET['road']) || isset($_GET['village']) || isset($_GET['city'])) {
+    $controller->placeBuilding();
+}
+$controller->generateResources();
+
 ?>
 
 <html>
