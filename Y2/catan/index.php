@@ -17,11 +17,21 @@ function console($input, $line = "unknown")
     file_put_contents(__DIR__ . '/log.js', $logs);
 }
 
-file_put_contents(__DIR__ . '/log.js', "console.log('L0: Game initialized!');\n");
-
 include_once "controller.php";
 
-$controller = new Controller(['Alyxia', 'Niele', 'Tinna', 'Flamex']);
+session_start();
+
+if (isset($_SESSION['controller'])) {
+    $controller = $_SESSION['controller'];
+} else {
+    file_put_contents(__DIR__ . '/log.js', "console.log('L0: Game initialized!');\n");
+    $controller = new Controller(['Alyxia', 'Niele', 'Tinna', 'Flamex']);
+}
+
+if (isset($_GET['reset'])) {
+    session_destroy();
+    header("location:index.php");
+}
 
 if (isset($_GET['road']) || isset($_GET['village']) || isset($_GET['city'])) {
     $controller->placeBuilding();
@@ -30,16 +40,17 @@ $controller->generateResources();
 
 ?>
 
-<html>
-<head>
-    <title>Catan</title>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="catan.css">
-    <meta name="author" content="Alyxia Sother">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="log.js"></script>
-</head>
-<body>
-<?= $controller ?>
-</body>
-</html>
+    <html>
+    <head>
+        <title>Catan</title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="catan.css">
+        <meta name="author" content="Alyxia Sother">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="log.js"></script>
+    </head>
+    <body>
+    <?= $controller ?>
+    </body>
+    </html>
+<?php $_SESSION['controller'] = $controller ?>

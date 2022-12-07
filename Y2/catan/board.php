@@ -11,6 +11,8 @@ class Board
     public array $buildings;
     /** @var Building[] */
     public array $roads;
+    /** @var Building[] */
+    private array $showRoads;
 
     public function __construct()
     {
@@ -29,6 +31,7 @@ class Board
 
     public function __toString(): string
     {
+        $this->showRoads = $this->roads;
         $print = "<board>\n";
         $print .= $this->cityRow(1, 8);
         $print .= $this->tileRow(1, 4);
@@ -58,7 +61,7 @@ class Board
         for ($i = $start; $i < $stop; $i++) {
             $print .= $this->buildings[$i];
             if ($i != $stop - 1) {
-                $print .= array_pop($this->roads);
+                $print .= array_pop($this->showRoads);
             }
         }
         $print .= "</cityrow>\n<br/>\n";
@@ -77,10 +80,10 @@ class Board
     private function tileRow(int $start, int $stop): string
     {
         $print = "<tilerow>\n";
-        $print .= array_pop($this->roads);
+        $print .= array_pop($this->showRoads);
         for ($i = $start; $i < $stop; $i++) {
             $print .= $this->tiles[$i];
-            $print .= array_pop($this->roads);
+            $print .= array_pop($this->showRoads);
         }
         $print .= "</tilerow>\n<br/>\n";
         return $print;
