@@ -36,6 +36,9 @@ if (isset($_GET['reset'])) {
 if (isset($_GET['road']) || isset($_GET['village']) || isset($_GET['city'])) {
     $controller->placeBuilding();
 }
+if (isset($_GET['turn'])) {
+    $controller->endTurn();
+}
 $controller->generateResources();
 
 ?>
@@ -51,6 +54,9 @@ $controller->generateResources();
     </head>
     <body>
     <?= $controller ?>
+    <a href="?reset">fuck off</a>
+    <br/>
+    <a href="?turn">end it</a>
     </body>
     </html>
 <?php $_SESSION['controller'] = $controller ?>

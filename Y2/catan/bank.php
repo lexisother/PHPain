@@ -8,12 +8,14 @@ class Bank
     {
     }
 
-    public function giveResource(string $name): string
+    public function getResource(string $name): string|null
     {
-        if ($this->resources[$name] > 0)
+        if ($this->resources[$name] > 0) {
             $this->resources[$name]--;
+            return $name;
+        }
+        return null;
 
-        return $name;
     }
 
     public function setResource(string $name): void

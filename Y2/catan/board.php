@@ -108,4 +108,9 @@ class Board
                 break;
         }
     }
+
+    public function checkBuildingOwner(int $id): string
+    {
+        return $this->buildings[$id]->getColour();
+    }
 }

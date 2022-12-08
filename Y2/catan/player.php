@@ -108,4 +108,9 @@ class Player
     {
         $this->resources[$type]++;
     }
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
 }

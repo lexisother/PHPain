@@ -36,6 +36,9 @@ class Tile
      */
     public function getType(): string
     {
-        return $this->type;
+        return match ($this->type) {
+            "grass" => "sheep",
+            default => $this->type
+        };
     }
 }

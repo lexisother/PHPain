@@ -4,11 +4,13 @@ include_once "lists.php";
 include_once "dice.php";
 include_once "board.php";
 include_once "player.php";
+include_once "bank.php";
 
 class Controller
 {
     private Dice $dice;
     private Board $board;
+    private Bank $bank;
     /** @var Player[] */
     private array $players;
     private int $turn;
@@ -19,6 +21,7 @@ class Controller
     {
         $this->dice = new Dice(2);
         $this->board = new Board();
+        $this->bank = new Bank();
         for ($i = 0; $i < count($names); $i++) {
             $this->players[$i] = new Player($i + 1, $names[$i]);
         }
@@ -40,11 +43,13 @@ class Controller
                 $this->board->placeBuilding($piece, $id);
             }
         } elseif (isset($_GET['village'])) {
-            $piece = $this->players[$this->turn]->givePiece("city");
-            if ($piece != null) {
-                $this->players[$this->turn]->receivePiece('village');
-                $id = $_GET['village'];
-                $this->board->placeBuilding($piece, $id);
+            if ($this->board->checkBuildingOwner($_GET['village']) == "P" . $this->players[$this->turn]->getId()) {
+                $piece = $this->players[$this->turn]->givePiece("city");
+                if ($piece != null) {
+                    $this->players[$this->turn]->receivePiece('village');
+                    $id = $_GET['village'];
+                    $this->board->placeBuilding($piece, $id);
+                }
             }
         }
     }
@@ -52,6 +57,17 @@ class Controller
     public function __toString(): string
     {
         return "<catan>\n" . implode('', $this->players) . $this->board . "</catan>";
+    }
+
+    public function endTurn(bool $res = true): void
+    {
+        $this->turn++;
+        if ($this->turn == count($this->players)) {
+            $this->turn = 0;
+        }
+        if ($res) {
+            $this->generateResources();
+        }
     }
 
     function generateResources()
@@ -62,13 +78,16 @@ class Controller
                 if ($tile->getNumber() == $this->dice->getValue()) {
                     $cities = Lists::getTileToCity($key);
                     $resource = $tile->getType();
-                    foreach ($cities as $city) {
-                        if ($this->board->buildings[$city]->getColour() != "") {
-                            $color = $this->board->buildings[$city]->getColour();
-                            $playerId = ((int)substr($color, -1)) - 1;
-                            $this->players[$playerId]->receiveResource($resource);
-                            if ($this->board->buildings[$city]->getType() == 'city') {
+                    $resource = $this->bank->getResource($resource);
+                    if ($resource != null) {
+                        foreach ($cities as $city) {
+                            if ($this->board->buildings[$city]->getColour() != "") {
+                                $color = $this->board->buildings[$city]->getColour();
+                                $playerId = ((int)substr($color, -1)) - 1;
                                 $this->players[$playerId]->receiveResource($resource);
+                                if ($this->board->buildings[$city]->getType() == 'city') {
+                                    $this->players[$playerId]->receiveResource($resource);
+                                }
                             }
                         }
                     }
