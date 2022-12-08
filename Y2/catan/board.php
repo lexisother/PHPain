@@ -109,8 +109,13 @@ class Board
         }
     }
 
-    public function checkBuildingOwner(int $id): string
+    public function checkBuilding(int $cityId): string
     {
-        return $this->buildings[$id]->getColour();
+        return $this->buildings[$cityId]->getColour();
+    }
+
+    public function checkRoad(int $roadId): string
+    {
+        return $this->roads[$roadId]->getColour();
     }
 }

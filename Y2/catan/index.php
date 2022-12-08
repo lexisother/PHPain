@@ -39,7 +39,6 @@ if (isset($_GET['road']) || isset($_GET['village']) || isset($_GET['city'])) {
 if (isset($_GET['turn'])) {
     $controller->endTurn();
 }
-$controller->generateResources();
 
 ?>
 

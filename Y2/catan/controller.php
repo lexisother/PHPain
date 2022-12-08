@@ -14,6 +14,7 @@ class Controller
     /** @var Player[] */
     private array $players;
     private int $turn;
+    private bool $phaseOne;
 
     public function __construct(
         array $names
@@ -25,25 +26,33 @@ class Controller
         for ($i = 0; $i < count($names); $i++) {
             $this->players[$i] = new Player($i + 1, $names[$i]);
         }
+        $this->phaseOne = true;
         $this->turn = 0;
     }
 
     public function placeBuilding(): void
     {
         if (isset($_GET['road'])) {
-            $piece = $this->players[$this->turn]->givePiece("road");
-            if ($piece != null) {
-                $id = $_GET['road'];
-                $this->board->placeBuilding($piece, $id);
+            if ($this->checkRoadConnection($_GET['road'])) {
+                $piece = $this->players[$this->turn]->givePiece("road");
+                if ($piece != null) {
+                    $id = $_GET['road'];
+                    $this->board->placeBuilding($piece, $id);
+                    if ($this->phaseOne) {
+                        $this->endTurn();
+                    }
+                }
             }
         } elseif (isset($_GET['city'])) {
-            $piece = $this->players[$this->turn]->givePiece("village");
-            if ($piece != null) {
-                $id = $_GET['city'];
-                $this->board->placeBuilding($piece, $id);
+            if ($this->checkCityConnection($_GET['city'])) {
+                $piece = $this->players[$this->turn]->givePiece("village");
+                if ($piece != null) {
+                    $id = $_GET['city'];
+                    $this->board->placeBuilding($piece, $id);
+                }
             }
         } elseif (isset($_GET['village'])) {
-            if ($this->board->checkBuildingOwner($_GET['village']) == "P" . $this->players[$this->turn]->getId()) {
+            if ($this->board->checkBuilding($_GET['village']) == "P" . $this->players[$this->turn]->getId()) {
                 $piece = $this->players[$this->turn]->givePiece("city");
                 if ($piece != null) {
                     $this->players[$this->turn]->receivePiece('village');
@@ -54,23 +63,41 @@ class Controller
         }
     }
 
-    public function __toString(): string
+    private function checkRoadConnection(int $id): bool
     {
-        return "<catan>\n" . implode('', $this->players) . $this->board . "</catan>";
+        $cities = Lists::getRoadToCity($id);
+        foreach ($cities as $cityId) {
+            if ("P" . $this->players[$this->turn]->getId() == $this->board->checkBuilding($cityId)) {
+                return true;
+            }
+        }
+
+        $roads = Lists::getRoadToRoad($id);
+        foreach ($roads as $roadId) {
+            if ("P" . $this->players[$this->turn]->getId() == $this->board->checkRoad($roadId)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
-    public function endTurn(bool $res = true): void
+    public function endTurn(): void
     {
         $this->turn++;
         if ($this->turn == count($this->players)) {
             $this->turn = 0;
         }
-        if ($res) {
+        if (!$this->phaseOne) {
             $this->generateResources();
+        } else {
+            if ($this->turn == count($this->players) * 2) {
+                $this->phaseOne = false;
+            }
         }
     }
 
-    function generateResources()
+    public function generateResources(): void
     {
         $this->dice->roll();
         if ($this->dice->getValue() != 7) {
@@ -131,5 +158,32 @@ class Controller
          * --bonus
          * rover..,,,..,...,,.. mhhnghmhnmhgmh,,..
          */
+    }
+
+    private function checkCityConnection(int $city): bool
+    {
+        $cities = Lists::getCityToCities($city);
+        foreach ($cities as $cityId) {
+            if ("P" . $this->players[$this->turn]->getId() == $this->board->checkBuilding($cityId)) {
+                return true;
+            }
+        }
+
+        $roads = Lists::getCityToRoad($city);
+        foreach ($roads as $roadId) {
+            if ("P" . $this->players[$this->turn]->getId() == $this->board->checkRoad($roadId)) {
+                return true;
+            }
+        }
+
+        if ($this->phaseOne) {
+            return true;
+        }
+        return false;
+    }
+
+    public function __toString(): string
+    {
+        return "<catan>\n" . implode('', $this->players) . $this->board . "</catan>";
     }
 }
